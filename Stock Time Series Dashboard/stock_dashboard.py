@@ -287,6 +287,7 @@ build_candlestick(df, choice)
 st.markdown("---")
 
 
+
 Log_returns(choice)
 st.markdown("---")
 
