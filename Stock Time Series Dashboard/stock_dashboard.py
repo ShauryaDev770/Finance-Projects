@@ -10,14 +10,14 @@ warnings.filterwarnings('ignore')
 
 st.set_page_config(page_title="Live Stock Data Dashboard", page_icon='📈', layout="wide")
 
-# ── Global dark theme constants ───────────────────────────────────────────────
+
 BG       = "#0e1117"
 CARD_BG  = "#161b22"
 ACCENT   = "#00BFFF"
 ACCENT2  = "#7B68EE"
 GRID_CLR = "#21262d"
 
-# ── Inject custom CSS ─────────────────────────────────────────────────────────
+
 st.markdown(f"""
     <style>
         /* Page background */
@@ -64,7 +64,7 @@ st.markdown(f"""
     </style>
 """, unsafe_allow_html=True)
 
-# ── Sidebar ───────────────────────────────────────────────────────────────────
+
 with st.sidebar:
     st.markdown("## 📈 Dashboard")
     st.markdown("---")
@@ -76,14 +76,12 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
-# ── Page header ───────────────────────────────────────────────────────────────
+
 st.markdown("# 📈 Stock Time Series Analysis Dashboard")
 st.markdown("---")
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-#  FUNCTIONS  (logic untouched — only chart styling & layout changed)
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 def Rolling_Volitility():
     df = pd.read_csv("Stock_data.csv", parse_dates=['Date'])
@@ -255,16 +253,14 @@ def build_candlestick(df, choice):
     return st.plotly_chart(figure, use_container_width=True)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-#  MAIN RENDER
-# ─────────────────────────────────────────────────────────────────────────────
+
 
 df = pd.read_csv("Stock_data.csv", parse_dates=['Date'])
 df = df.set_index(pd.DatetimeIndex(df["Date"].values))
 
 TICKER_META = {
-    "AAPL":  {"label": "🍎 AAPL — Current Price",     "prefix": "$",  "currency": "USD"},
-    "TSLA":  {"label": "⚡ TSLA — Current Price",      "prefix": "$",  "currency": "USD"},
+    "AAPL":  {"label": " AAPL — Current Price",     "prefix": "$",  "currency": "USD"},
+    "TSLA":  {"label": " TSLA — Current Price",      "prefix": "$",  "currency": "USD"},
     "^NSEI": {"label": "🇮🇳 NIFTY 50 — Current Price", "prefix": "₹", "currency": "INR"},
 }
 
@@ -272,7 +268,7 @@ meta         = TICKER_META[choice]
 close_col    = f"{choice}.Close"
 current_price = df[close_col].iloc[-1]
 
-# ── Metric row ────────────────────────────────────────────────────────────────
+
 m1, m2, m3 = st.columns(3)
 with m1:
     st.metric(label=meta["label"], value=f"{meta['prefix']}{current_price:,.2f}")
@@ -285,15 +281,15 @@ with m3:
 
 st.markdown("---")
 
-# ── Candlestick section ───────────────────────────────────────────────────────
-st.markdown("### 🕯️ Price & Volume")
+
+st.markdown("### Price & Volume")
 build_candlestick(df, choice)
 st.markdown("---")
 
-# ── Returns section ───────────────────────────────────────────────────────────
+
 Log_returns(choice)
 st.markdown("---")
 
-# ── Volatility section ────────────────────────────────────────────────────────
+
 st.markdown("### 🔀 Rolling Volatility")
 Rolling_Volitility()
