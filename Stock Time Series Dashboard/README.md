@@ -1,4 +1,4 @@
-# 📈 Live Stock Analysis Dashboard
+# 📈 Live Stock Time Series Analysis Dashboard
 
 A Streamlit-based interactive dashboard for visualising stock price history, returns, and volatility — with an automated data pipeline to keep the CSV up to date.
 
@@ -7,8 +7,8 @@ A Streamlit-based interactive dashboard for visualising stock price history, ret
 ## Project Structure
 
 ```
-├── app.py              # Streamlit dashboard
-├── pipeline.py         # Data fetch & update script
+├── stock_dashboard.py              # Streamlit dashboard
+├── stock_data_pipeline.py         # Data fetch & update script
 └── Stock_data.csv      # Auto-generated local data store
 ```
 
@@ -25,7 +25,7 @@ A Streamlit-based interactive dashboard for visualising stock price history, ret
 
 ---
 
-## Data Pipeline (`pipeline.py`)
+## Data Pipeline (`stock_data_pipeline.py`)
 
 The `update_stock_csv()` function manages a local `Stock_data.csv`:
 
@@ -37,7 +37,7 @@ This means you only pull new data on each run rather than re-downloading everyth
 
 **Run it before launching the dashboard to ensure fresh data:**
 ```bash
-python pipeline.py
+python stock_data_pipeline.py
 ```
 
 ---
@@ -60,7 +60,7 @@ pip install streamlit pandas numpy plotly yfinance
 
 **Run the dashboard**
 ```bash
-streamlit run app.py
+python -m streamlit run stock_dashboard.py
 ```
 
 ---
@@ -79,6 +79,6 @@ streamlit run app.py
 
 ## Notes
 
-- Data is stored locally in `Stock_data.csv` — re-run `pipeline.py` any time you want to sync the latest prices.
+- Data is stored locally in `Stock_data.csv` — re-run `stock_data_pipeline.py` any time you want to sync the latest prices.
 - The dashboard reads from the CSV only; it does not make live API calls at render time.
 - Nifty 50 volume data may appear as zero — this is a known `yfinance` limitation for `^NSEI`.
